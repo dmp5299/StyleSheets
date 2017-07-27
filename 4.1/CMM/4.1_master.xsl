@@ -554,14 +554,14 @@
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Data module/Technical publication
+											Action/Condition
 										</fo:block>
 									</fo:table-cell>
 									<fo:table-cell padding-before="4pt" padding-after="4pt" start-indent="0">
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Title
+											Data module/Technical publication
 										</fo:block>
 									</fo:table-cell>
 								</fo:table-row>
@@ -579,7 +579,7 @@
 				</fo:block>
 			</xsl:when>
 			<xsl:when test="reqCondNoRef">
-				<fo:block space-after=".37in" id="{generate-id(.)}" span="all">
+				<fo:block  padding-after=".37in" id="{generate-id(.)}" span="all">
 					<fo:block font-weight="bold" font-size="14pt" font-family="arial" padding-after=".1in" keep-with-next.within-page="always">
 						Required conditions
 					</fo:block>
@@ -606,14 +606,14 @@
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Data module/Technical publication
+											Action/Condition
 										</fo:block>
 									</fo:table-cell>
 									<fo:table-cell padding-before="4pt" padding-after="4pt" start-indent="0">
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Title
+											Data module/Technical publication
 										</fo:block>
 									</fo:table-cell>
 								</fo:table-row>
@@ -631,13 +631,7 @@
 					 <fo:block/>
 				   </fo:table-cell>
 				 </fo:table-row>
-							<fo:table-row>
-								<fo:table-cell padding-before="3pt" padding-after="3pt" start-indent="0">
-									<fo:block xsl:use-attribute-sets="normal-text">
-										<xsl:apply-templates/>
-									</fo:block>
-								</fo:table-cell>
-							</fo:table-row>
+							<xsl:apply-templates/>
 						</fo:table-body>
 					</fo:table>
 				</fo:block>
@@ -670,14 +664,14 @@
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Data module/Technical publication
+											Action/Condition
 										</fo:block>
 									</fo:table-cell>
 									<fo:table-cell padding-before="4pt" padding-after="4pt" start-indent="0">
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Title
+											Data module/Technical publication
 										</fo:block>
 									</fo:table-cell>
 								</fo:table-row>
@@ -701,6 +695,27 @@
 				</fo:block>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template match="reqCondDm|reqCondNoRef">
+		<xsl:if test="@changeMark">
+<fo:change-bar-begin change-bar-class="{generate-id(.)}" change-bar-style="solid"/>
+</xsl:if>
+		<fo:table-row>
+			<fo:table-cell padding-before="3pt" padding-after="3pt" start-indent="0">
+				<fo:block xsl:use-attribute-sets="normal-text">
+					<xsl:apply-templates select="reqCond"/>
+				</fo:block>
+			</fo:table-cell>
+			<fo:table-cell padding-before="3pt" padding-after="3pt" start-indent="0">
+				<fo:block xsl:use-attribute-sets="normal-text" >
+					<xsl:apply-templates select="descendant::dmCode"/>
+				</fo:block>
+			</fo:table-cell>
+		</fo:table-row>
+		<xsl:if test="@changeMark">
+	<fo:change-bar-end change-bar-class="{generate-id(.)}"/>
+</xsl:if>
 	</xsl:template>
 	
 	<xsl:template match="reqCondDm">
@@ -2294,11 +2309,10 @@ name="indenture_string">
 				<xsl:value-of select="concat('Model: ',/pm/descendant::pmCode/@modelIdentCode)"/>
 			</fo:block>
 			<fo:block xsl:use-attribute-sets="bold-normal-text" padding-after="3pt" text-align="center" font-size="14pt">
-				<xsl:value-of select="'Part Number(s): '"/><!--
+				<xsl:value-of select="'Part Number(s): '"/>
 				<xsl:for-each select="descendant::catalogSeqNumber[@item='001']">
 					<xsl:value-of select="concat(descendant::partRef/@partNumberValue,', ')"/>
-				</xsl:for-each>-->
-				4950136 and 4952164 (501-1-14561)
+				</xsl:for-each>
 			</fo:block>
 			<fo:block xsl:use-attribute-sets="bold-normal-text" padding-after="3.3in" text-align="center" font-size="14pt">
 				Issue Number: <xsl:value-of select="/pm/descendant::issueInfo[1]/@issueNumber"/>
@@ -2797,7 +2811,7 @@ submitted pursuant to, FAA Part 33 for the component. The ICA was found to be ac
 		</xsl:choose>
 	</xsl:template>
 -->
-	<xsl:template match="internalRef[@internalRefTargetType='irtt05']">
+	<xsl:template match="internalRef[@internalRefTargetType='irtt05']|internalRef[@internalRefTargetType='supequip']">
 		<fo:inline xsl:use-attribute-sets="normal-text" color="blue" white-space-treatment="ignore">
 			<xsl:variable name="id" select="@internalRefId"/>
 			<xsl:for-each select="ancestor::dmodule/descendant::supportEquipDescr">
@@ -2816,7 +2830,7 @@ submitted pursuant to, FAA Part 33 for the component. The ICA was found to be ac
 		</fo:inline>
 	</xsl:template>
 	
-	<xsl:template match="internalRef[@internalRefTargetType='irtt03']">
+	<xsl:template match="internalRef[@internalRefTargetType='irtt03']|internalRef[@internalRefTargetType='graphic']">
 		<fo:inline xsl:use-attribute-sets="normal-text" color="blue" white-space-treatment="ignore">
 			<xsl:if test="parent::title">
 				<xsl:attribute name="font-size">14pt</xsl:attribute>
@@ -2835,7 +2849,7 @@ submitted pursuant to, FAA Part 33 for the component. The ICA was found to be ac
 		</fo:inline>
 	</xsl:template>
 		
-	<xsl:template match="internalRef[@internalRefTargetType='irtt08']">
+	<xsl:template match="internalRef[@internalRefTargetType='irtt08']|internalRef[@internalRefTargetType='step']">
 		<fo:inline xsl:use-attribute-sets="normal-text" color="blue" white-space-treatment="ignore">
 			<xsl:variable name="id" select="@internalRefId"/>
 			<xsl:for-each select="ancestor::dmodule/descendant::proceduralStep ">
@@ -2871,7 +2885,7 @@ submitted pursuant to, FAA Part 33 for the component. The ICA was found to be ac
 		</fo:inline>
 	</xsl:template>
 	
-	<xsl:template match="internalRef[@internalRefTargetType='irtt06']">
+	<xsl:template match="internalRef[@internalRefTargetType='irtt06']|internalRef[@internalRefTargetType='spares']">
 		<fo:inline xsl:use-attribute-sets="normal-text" color="blue" white-space-treatment="ignore">
 			<xsl:variable name="id" select="@internalRefId"/>
 			<xsl:for-each select="ancestor::dmodule/descendant::spareDescr">
@@ -2884,7 +2898,7 @@ submitted pursuant to, FAA Part 33 for the component. The ICA was found to be ac
 		</fo:inline>
 	</xsl:template>
 
-	<xsl:template match="internalRef[@internalRefTargetType='irtt04']">
+	<xsl:template match="internalRef[@internalRefTargetType='irtt04']|internalRef[@internalRefTargetType='supply']">
 		<fo:inline xsl:use-attribute-sets="normal-text" color="blue" white-space-treatment="ignore">
 			<xsl:variable name="id" select="@internalRefId"/>
 			<xsl:for-each select="ancestor::dmodule/descendant::supplyDescr">
@@ -2903,7 +2917,7 @@ submitted pursuant to, FAA Part 33 for the component. The ICA was found to be ac
 		</fo:inline>
 	</xsl:template>
 
-	<xsl:template match="internalRef[@internalRefTargetType='irtt01']">
+	<xsl:template match="internalRef[@internalRefTargetType='irtt01']|internalRef[@internalRefTargetType='figure']">
 		<fo:inline xsl:use-attribute-sets="normal-text" color="blue" white-space-treatment="ignore">
 			<xsl:if test="parent::title">
 				<xsl:attribute name="font-size">14pt</xsl:attribute>
@@ -2920,7 +2934,7 @@ submitted pursuant to, FAA Part 33 for the component. The ICA was found to be ac
 		</fo:inline>
 	</xsl:template>
 	
-	<xsl:template match="internalRef[@internalRefTargetType='irtt02']">
+	<xsl:template match="internalRef[@internalRefTargetType='irtt02']|internalRef[@internalRefTargetType='table']">
 		<fo:inline xsl:use-attribute-sets="normal-text" color="blue" white-space-treatment="ignore">
 			<xsl:if test="parent::title">
 				<xsl:attribute name="font-size">14pt</xsl:attribute>

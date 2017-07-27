@@ -558,14 +558,14 @@
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Data module/Technical publication
+											Action/Condition
 										</fo:block>
 									</fo:table-cell>
 									<fo:table-cell padding-before="4pt" padding-after="4pt" start-indent="0">
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Title
+											Data module/Technical publication
 										</fo:block>
 									</fo:table-cell>
 								</fo:table-row>
@@ -583,7 +583,7 @@
 				</fo:block>
 			</xsl:when>
 			<xsl:when test="reqCondNoRef">
-				<fo:block space-after=".37in" id="{generate-id(.)}" span="all">
+				<fo:block  padding-after=".37in" id="{generate-id(.)}" span="all">
 					<fo:block font-weight="bold" font-size="14pt" font-family="arial" padding-after=".1in" keep-with-next.within-page="always">
 						Required conditions
 					</fo:block>
@@ -610,14 +610,14 @@
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Data module/Technical publication
+											Action/Condition
 										</fo:block>
 									</fo:table-cell>
 									<fo:table-cell padding-before="4pt" padding-after="4pt" start-indent="0">
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Title
+											Data module/Technical publication
 										</fo:block>
 									</fo:table-cell>
 								</fo:table-row>
@@ -635,13 +635,7 @@
 					 <fo:block/>
 				   </fo:table-cell>
 				 </fo:table-row>
-							<fo:table-row>
-								<fo:table-cell padding-before="3pt" padding-after="3pt" start-indent="0">
-									<fo:block xsl:use-attribute-sets="normal-text">
-										<xsl:apply-templates/>
-									</fo:block>
-								</fo:table-cell>
-							</fo:table-row>
+							<xsl:apply-templates/>
 						</fo:table-body>
 					</fo:table>
 				</fo:block>
@@ -674,14 +668,14 @@
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Data module/Technical publication
+											Action/Condition
 										</fo:block>
 									</fo:table-cell>
 									<fo:table-cell padding-before="4pt" padding-after="4pt" start-indent="0">
 										<xsl:attribute name="border-bottom-style">solid</xsl:attribute>
 										<xsl:attribute name="border-bottom-width">1pt</xsl:attribute>
 										<fo:block xsl:use-attribute-sets="bold-normal-text">
-											Title
+											Data module/Technical publication
 										</fo:block>
 									</fo:table-cell>
 								</fo:table-row>
@@ -705,6 +699,27 @@
 				</fo:block>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+	
+	<xsl:template match="reqCondDm|reqCondNoRef">
+		<xsl:if test="@changeMark">
+<fo:change-bar-begin change-bar-class="{generate-id(.)}" change-bar-style="solid"/>
+</xsl:if>
+		<fo:table-row>
+			<fo:table-cell padding-before="3pt" padding-after="3pt" start-indent="0">
+				<fo:block xsl:use-attribute-sets="normal-text">
+					<xsl:apply-templates select="reqCond"/>
+				</fo:block>
+			</fo:table-cell>
+			<fo:table-cell padding-before="3pt" padding-after="3pt" start-indent="0">
+				<fo:block xsl:use-attribute-sets="normal-text" >
+					<xsl:apply-templates select="descendant::dmCode"/>
+				</fo:block>
+			</fo:table-cell>
+		</fo:table-row>
+		<xsl:if test="@changeMark">
+	<fo:change-bar-end change-bar-class="{generate-id(.)}"/>
+</xsl:if>
 	</xsl:template>
 	
 	<xsl:template match="reqCondDm">

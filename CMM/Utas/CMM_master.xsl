@@ -2272,16 +2272,14 @@ name="indenture_string">
 Export Administration Regulations. Diversion contrary to U.S. law is prohibited.
 			</fo:block>
 			<fo:block padding-after=".1in" font-size="7pt" font-family="arial"  text-align="justify">
-				ECCN:9E991
+				U.S. Export Classification: EAR 9E991
 			</fo:block>
 			<fo:block padding-after=".1in" font-size="7pt" font-family="arial" text-align="justify">
-				THIS DOCUMENT IS THE PROPERTY OF UTC AEROSPACE SYSTEMS AND CONTAINS CONFIDENTIAL AND/OR PROPRIETARY 
-				INFORMATION. YOU MAY NOT POSSESS, USE, COPY OR DISCLOSE THIS DOCUMENT OR ANY INFORMATION IN IT, 
-				FOR ANY PURPOSE, INCLUDING WITHOUT LIMITATION, TO DESIGN, MANUFACTURE OR REPAIR PARTS, OR OBTAIN
-				ANY GOVERNMENT APPROVAL TO DO SO, WITHOUT UTC AEROSPACE SYSTEMS' EXPRESS WRITTEN PERMISSION. NEITHER 
-				RECEIPT NOR POSSESSION OF THIS DOCUMENT ALONE, FROM ANY SOURCE, CONSTITUTES SUCH PERMISSION. POSSESSION, 
-				USE, COPYING OR DISCLOSURE BY ANYONE WITHOUT UTC AEROSPACE SYSTEMS' EXPRESS WRITTEN PERMISSION IS NOT 
-				AUTHORIZED AND MAY RESULT IN CRIMINAL AND/OR CIVIL LIABILITY.
+				THIS DOCUMENT IS THE PROPERTY OF UTC AEROSPACE SYSTEMS AND CONTAINS CONFIDENTIAL AND/OR PROPRIETARY INFORMATION. YOU MAY NOT POSSESS, 
+				USE, COPY OR DISCLOSE THIS DOCUMENT OR ANY INFORMATION IN IT, FOR ANY PURPOSE, INCLUDING WITHOUT LIMITATION, TO DESIGN, MANUFACTURE
+				OR REPAIR PARTS, OR OBTAIN ANY GOVERNMENT APPROVAL TO DO SO, WITHOUT UTC AEROSPACE SYSTEMS’ EXPRESS WRITTEN PERMISSION. NEITHER
+				RECEIPT NOR POSSESSION OF THIS DOCUMENT ALONE, FROM ANY SOURCE, CONSTITUTES SUCH PERMISSION. POSSESSION, USE, COPYING OR DISCLOSURE
+				BY ANYONE WITHOUT UTC AEROSPACE SYSTEMS’ EXPRESS WRITTEN PERMISSION IS NOT AUTHORIZED AND MAY RESULT IN CRIMINAL AND/OR CIVIL LIABILITY.
 			</fo:block>
 			<xsl:variable name="faa_accepted">
 				<xsl:value-of select="ext:getTitleInfo('dave')"/>
@@ -3274,7 +3272,7 @@ Export Administration Regulations. Diversion contrary to U.S. law is prohibited.
 						<xsl:attribute name="content-width">13in</xsl:attribute>
 					</xsl:if>
 					<xsl:attribute name="src" >
-						<xsl:value-of select="concat('C:/inetpub/wwwroot/Graphics/',@infoEntityIdent,'.jpg')"/>
+						<xsl:value-of select="concat($graphicPath,'/',@infoEntityIdent,'.jpg')"/>
 					</xsl:attribute>
 				</fo:external-graphic>
 			</xsl:when>
@@ -3284,17 +3282,18 @@ Export Administration Regulations. Diversion contrary to U.S. law is prohibited.
 						<xsl:attribute name="content-width">13in</xsl:attribute>
 					</xsl:if>
 					<xsl:attribute name="src" >
-						<xsl:value-of select="concat('C:/inetpub/wwwroot/Graphics/',@infoEntityIdent,'.png')"/>
+						<xsl:value-of select="concat($graphicPath,'/',@infoEntityIdent,'.png')"/>
 					</xsl:attribute>
 				</fo:external-graphic>
 			</xsl:when>
 			<xsl:when test="ext:fileExists(concat(@infoEntityIdent,'.tif'))" >
+				
 				<fo:external-graphic  content-height="210mm" scaling="uniform" content-width="7in">
 					<xsl:if test="ancestor::foldout">
 						<xsl:attribute name="content-width">13in</xsl:attribute>
 					</xsl:if>
 					<xsl:attribute name="src" >
-						<xsl:value-of select="concat('C:/inetpub/wwwroot/Graphics/',@infoEntityIdent,'.tif')"/>
+						<xsl:value-of select="concat($graphicPath,'/',@infoEntityIdent,'.tif')"/>
 					</xsl:attribute>
 				</fo:external-graphic>
 			</xsl:when>
